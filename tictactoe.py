@@ -23,18 +23,28 @@ def tic_tac_toe():
     turn = 0
     
     print("Welcome to Tic-Tac-Toe!")
+    print("Instructions: The game is played on a 3x3 grid.")
+    print("Players take turns placing their mark (X or O) in an empty cell.")
+    print("To make a move, enter the row number and the column number separated by a space.")
+    print("Rows and columns are numbered 1, 2, and 3.")
+    print("The first player to get 3 of their marks in a row (up, down, across, or diagonally) is the winner.")
+    print("When all 9 squares are full, the game is over. If no player has 3 marks in a row, the game ends in a tie.")
+    print("-" * 30)
     print_board(board)
 
     while True:
         player = players[turn % 2]
         try:
-            move = input(f"Player {player}, enter row and column (0-2) separated by space: ")
-            r, c = map(int, move.split())
+            move = input(f"Player {player}, enter row and column (1-3) separated by space: ")
+            r_input, c_input = map(int, move.split())
+            r, c = r_input - 1, c_input - 1
+            if not (0 <= r <= 2 and 0 <= c <= 2):
+                 raise IndexError("Coordinates out of range")
             if board[r][c] != " ":
                 print("Cell already taken. Try again.")
                 continue
         except (ValueError, IndexError):
-            print("Invalid input. Please enter two numbers between 0 and 2.")
+            print("Invalid input. Please enter two numbers between 1 and 3.")
             continue
 
         board[r][c] = player
